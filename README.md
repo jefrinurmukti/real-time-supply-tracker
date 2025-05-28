@@ -571,9 +571,6 @@ Special thanks to:
 - 👥 **All Contributors** who make this project better
 
 ---
-
-**Project Link**: [https://github.com/your-username/spring-boot-microservices](https://github.com/your-username/spring-boot-microservices)
-
 </div>
 
 ---
