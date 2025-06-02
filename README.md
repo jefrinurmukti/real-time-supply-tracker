@@ -1,581 +1,125 @@
-<div align="center">
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/spring-boot-microservices.svg?style=for-the-badge&logo=github)](https://github.com/your-username/spring-boot-microservices/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/spring-boot-microservices.svg?style=for-the-badge&logo=github)](https://github.com/your-username/spring-boot-microservices/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/your-username/spring-boot-microservices.svg?style=for-the-badge&logo=github)](https://github.com/your-username/spring-boot-microservices/issues)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github-actions)](https://github.com/your-username/spring-boot-microservices/actions)
-
-</div>
-
-<div align="center">
-  <h3>🌟 A production-ready microservices architecture built with Spring Cloud 🌟</h3>
-  <p><em>Scalable • Resilient • Observable • Event-Driven</em></p>
-</div>
-
----
-
-## 📋 Table of Contents
-
-- [🎯 Overview](#-overview)
-- [✨ Key Features](#-key-features)
-- [🏗️ Architecture](#️-architecture)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🚀 Quick Start](#-quick-start)
-- [📊 Service Details](#-service-details)
-- [🔧 Configuration](#-configuration)
-- [📈 Monitoring & Observability](#-monitoring--observability)
-- [🧪 Testing](#-testing)
-- [🤝 Contributing](#-contributing)
-- [📜 License](#-license)
-
----
-
-## 🎯 Overview
-
-This project demonstrates a **real-world microservices architecture** for supply chain management, showcasing best practices in distributed systems design. Built with Spring Cloud ecosystem, it provides a robust foundation for scalable enterprise applications.
-
-### 🌟 What Makes This Special?
-
-- **🔄 Event-Driven Architecture** with Apache Kafka
-- **🛡️ Fault Tolerance** with Circuit Breakers
-- **🔍 Full Observability** with distributed tracing
-- **🚪 API Gateway** as single entry point
-- **📊 Centralized Logging** with ELK Stack
-- **🔐 Secure Authentication** & Authorization
-- **⚙️ Externalized Configuration** management
-
----
-
-## ✨ Key Features
-
-<table>
-<tr>
-<td width="50%">
-
-### 🏪 **Business Services**
-- 🛍️ **Product Catalog** - MongoDB-powered product management
-- 📦 **Order Processing** - Complete order lifecycle management
-- 📋 **Inventory Tracking** - Real-time stock management
-- 🔔 **Smart Notifications** - Event-driven customer alerts
-
-</td>
-<td width="50%">
-
-### 🛠️ **Infrastructure Services**
-- 🚪 **API Gateway** - Request routing & filtering
-- 🔍 **Service Discovery** - Dynamic service registration
-- ⚙️ **Config Server** - Centralized configuration
-- 🔐 **Auth Server** - Security & token management
-
-</td>
-</tr>
-</table>
-
----
-
-## 🏗️ Architecture
-
-### 🌐 System Overview
-
-```mermaid
-graph TB
-    Client[👤 Client] --> Gateway[🚪 API Gateway]
-    
-    Gateway --> Auth[🔐 Auth Server]
-    Gateway --> Product[🛍️ Product Service]
-    Gateway --> Order[📦 Order Service]
-    
-    Order -->|Sync Call| Inventory[📋 Inventory Service]
-    Order -->|Async Event| Kafka[🔄 Kafka]
-    Kafka --> Notification[🔔 Notification Service]
-    
-    Product --> MongoDB[(🍃 MongoDB)]
-    Order --> MySQL1[(🗄️ MySQL)]
-    Inventory --> MySQL2[(🗄️ MySQL)]
-    
-    subgraph "🛠️ Infrastructure"
-        Eureka[🔍 Eureka Server]
-        Config[⚙️ Config Server]
-        Zipkin[📊 Zipkin]
-        ELK[📈 ELK Stack]
-    end
-    
-    subgraph "🔧 External Config"
-        GitHub[📁 GitHub]
-        Vault[🔐 HashiCorp Vault]
-    end
-    
-    Config --> GitHub
-    Config --> Vault
-    
-    style Client fill:#e1f5fe
-    style Gateway fill:#f3e5f5
-    style Kafka fill:#fff3e0
-    style ELK fill:#e8f5e8
-```
-
-### 🏛️ Service Architecture Pattern
-
-Each microservice follows a clean, layered architecture:
-
-```
-┌─────────────────────────────────────┐
-│             🌐 API Layer            │
-│        (Controllers & DTOs)         │
-├─────────────────────────────────────┤
-│           💼 Business Layer         │
-│        (Services & Domain)          │
-├─────────────────────────────────────┤
-│         🗄️ Persistence Layer       │
-│      (Repositories & Entities)      │
-├─────────────────────────────────────┤
-│        🔌 Integration Layer         │
-│    (Message Queues & External)     │
-└─────────────────────────────────────┘
-```
-
----
-
-## 🛠️ Tech Stack
-
-<div align="center">
-
-### Core Framework
-![Spring Boot](https://img.shields.io/badge/Spring_Boot_3.2-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Spring Cloud](https://img.shields.io/badge/Spring_Cloud_2023-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![Java](https://img.shields.io/badge/Java_17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-
-### Messaging & Events
-![Apache Kafka](https://img.shields.io/badge/Apache_Kafka-000?style=for-the-badge&logo=apachekafka)
-![RabbitMQ](https://img.shields.io/badge/Rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
-
-### Databases
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
-
-### Infrastructure
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326ce5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
-
-### Monitoring & Observability
-![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=for-the-badge&logo=elasticsearch)
-![Kibana](https://img.shields.io/badge/Kibana-005571?style=for-the-badge&logo=kibana)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
-
-### Security & Config
-![Vault](https://img.shields.io/badge/Vault-FFEC6E?style=for-the-badge&logo=vault&logoColor=black)
-![OAuth2](https://img.shields.io/badge/OAuth2-4285F4?style=for-the-badge&logo=oauth&logoColor=white)
-
-</div>
-
----
-
-## 🚀 Quick Start
-
-### 📋 Prerequisites
-
-| Requirement | Version | Purpose |
-|-------------|---------|---------|
-| ☕ **Java JDK** | 17+ | Runtime environment |
-| 🐳 **Docker** | 20.10+ | Containerization |
-| 🐳 **Docker Compose** | 2.0+ | Multi-container orchestration |
-| 🔨 **Maven** | 3.8+ | Build automation |
-| 💾 **Available RAM** | 8GB+ | Running all services |
-
-### ⚡ One-Command Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/spring-boot-microservices.git
-cd spring-boot-microservices
-
-# Start the entire stack
-make up
-# OR
-docker-compose up -d && ./scripts/start-services.sh
-```
-
-### 🔧 Manual Setup
-
-<details>
-<summary>Click to expand manual setup instructions</summary>
-
-#### 1️⃣ Infrastructure Services
-```bash
-# Start backing services
-docker-compose up -d mongodb mysql kafka zookeeper elasticsearch kibana zipkin
-
-# Wait for services to be ready
-./scripts/wait-for-services.sh
-```
-
-#### 2️⃣ Core Services (in order)
-```bash
-# 1. Configuration Server
-cd config-server && mvn spring-boot:run &
-
-# 2. Discovery Server
-cd discovery-server && mvn spring-boot:run &
-
-# 3. Gateway
-cd api-gateway && mvn spring-boot:run &
-
-# 4. Business Services
-cd product-service && mvn spring-boot:run &
-cd inventory-service && mvn spring-boot:run &
-cd order-service && mvn spring-boot:run &
-cd notification-service && mvn spring-boot:run &
-```
-
-</details>
-
-### 🎯 Verify Installation
-
-After startup, check these endpoints:
-
-| Service | URL | Status |
-|---------|-----|--------|
-| 🚪 **API Gateway** | http://localhost:8080 | [![Status](https://img.shields.io/badge/Check-Live-brightgreen)](http://localhost:8080/actuator/health) |
-| 🔍 **Eureka Dashboard** | http://localhost:8761 | [![Status](https://img.shields.io/badge/Check-Live-brightgreen)](http://localhost:8761) |
-| 📊 **Zipkin Tracing** | http://localhost:9411 | [![Status](https://img.shields.io/badge/Check-Live-brightgreen)](http://localhost:9411) |
-| 📈 **Kibana Logs** | http://localhost:5601 | [![Status](https://img.shields.io/badge/Check-Live-brightgreen)](http://localhost:5601) |
-
----
-
-## 📊 Service Details
-
-<details>
-<summary>🛍️ <strong>Product Service</strong></summary>
-
-**Purpose**: Manages product catalog and inventory display
-
-**Tech Stack**: Spring Boot + MongoDB + Spring Data MongoDB
-
-**Key Features**:
-- ✅ Product CRUD operations
-- ✅ Category management
-- ✅ Search and filtering
-- ✅ Product recommendations
-
-**API Endpoints**:
-```http
-GET    /api/products           # List all products
-GET    /api/products/{id}      # Get product details
-POST   /api/products           # Create new product
-PUT    /api/products/{id}      # Update product
-DELETE /api/products/{id}      # Delete product
-GET    /api/products/search    # Search products
-```
-
-</details>
-
-<details>
-<summary>📦 <strong>Order Service</strong></summary>
-
-**Purpose**: Handles complete order lifecycle management
-
-**Tech Stack**: Spring Boot + MySQL + JPA + Kafka Producer
-
-**Key Features**:
-- ✅ Order creation and management
-- ✅ Inventory validation (sync call)
-- ✅ Payment processing integration
-- ✅ Order status tracking
-- ✅ Event publishing for notifications
-
-**API Endpoints**:
-```http
-POST   /api/orders             # Create new order
-GET    /api/orders/{id}        # Get order details
-GET    /api/orders/user/{id}   # Get user orders
-PUT    /api/orders/{id}/status # Update order status
-DELETE /api/orders/{id}        # Cancel order
-```
-
-</details>
-
-<details>
-<summary>📋 <strong>Inventory Service</strong></summary>
-
-**Purpose**: Real-time inventory tracking and management
-
-**Tech Stack**: Spring Boot + MySQL + JPA + Redis Cache
-
-**Key Features**:
-- ✅ Stock level management
-- ✅ Real-time availability checks
-- ✅ Low stock alerts
-- ✅ Inventory reservations
-- ✅ Audit trail for stock changes
-
-**API Endpoints**:
-```http
-GET    /api/inventory/{productId}     # Check stock
-POST   /api/inventory/reserve         # Reserve stock
-POST   /api/inventory/release         # Release reservation
-PUT    /api/inventory/{productId}     # Update stock
-GET    /api/inventory/low-stock       # Get low stock items
-```
-
-</details>
-
-<details>
-<summary>🔔 <strong>Notification Service</strong></summary>
-
-**Purpose**: Multi-channel customer notifications
-
-**Tech Stack**: Spring Boot + Kafka Consumer + Email/SMS APIs
-
-**Key Features**:
-- ✅ Email notifications
-- ✅ SMS alerts
-- ✅ Push notifications
-- ✅ Notification templates
-- ✅ Delivery tracking
-
-**Supported Events**:
-- 📧 Order confirmation
-- 📱 Shipping updates
-- ⚠️ Low stock alerts
-- 🎉 Promotional offers
-
-</details>
-
----
-
-## 🔧 Configuration
-
-### 🌍 Environment Profiles
-
-| Profile | Purpose | Config Source |
-|---------|---------|---------------|
-| `local` | Development | Local files |
-| `dev` | Development server | Config Server + GitHub |
-| `staging` | Pre-production | Config Server + Vault |
-| `prod` | Production | Config Server + Vault + Encryption |
-
-### ⚙️ Key Configuration Files
-
-```
-config-repo/
-├── application.yml                 # Global configuration
-├── application-{profile}.yml       # Profile-specific config
-├── api-gateway.yml                # Gateway routing rules
-├── product-service.yml            # Product service config
-├── order-service.yml              # Order service config
-└── inventory-service.yml          # Inventory service config
-```
-
-### 🔐 Security Configuration
-
-```yaml
-# Example security configuration
-security:
-  oauth2:
-    client:
-      registration:
-        gateway:
-          client-id: ${OAUTH2_CLIENT_ID}
-          client-secret: ${OAUTH2_CLIENT_SECRET}
-          scope: read,write
-    resource-server:
-      jwt:
-        issuer-uri: ${JWT_ISSUER_URI}
-```
-
----
-
-## 📈 Monitoring & Observability
-
-### 🔍 Distributed Tracing
-
-**Zipkin Integration** provides end-to-end request tracing:
-
-- 📊 Request flow visualization
-- ⏱️ Latency analysis
-- 🔍 Error detection
-- 📈 Performance bottleneck identification
-
-### 📊 Metrics & Monitoring
-
-**Prometheus + Grafana** stack for metrics:
-
-- 📈 JVM metrics
-- 🌐 HTTP request metrics  
-- 💾 Database connection pools
-- 🔄 Kafka consumer lag
-- 💿 Custom business metrics
-
-### 📝 Centralized Logging
-
-**ELK Stack** for log aggregation:
-
-```json
-{
-  "timestamp": "2024-01-15T10:30:00Z",
-  "service": "order-service",
-  "traceId": "abc123def456",
-  "spanId": "789ghi012jkl",
-  "level": "INFO",
-  "message": "Order created successfully",
-  "userId": "user-123",
-  "orderId": "order-456"
-}
-```
-
-### 🏥 Health Checks
-
-Each service exposes comprehensive health endpoints:
-
-```http
-GET /actuator/health      # Overall health
-GET /actuator/info        # Service information
-GET /actuator/metrics     # Prometheus metrics
-GET /actuator/env         # Environment details
-```
-
----
-
-## 🧪 Testing
-
-### 🧪 Test Strategy
-
-<table>
-<tr>
-<td width="33%">
-
-**🔬 Unit Tests**
-- JUnit 5
-- Mockito
-- Testcontainers
-- 90%+ coverage
-
-</td>
-<td width="33%">
-
-**🔄 Integration Tests**
-- Spring Boot Test
-- Test slices
-- Database testing
-- API contract testing
-
-</td>
-<td width="33%">
-
-**🌐 E2E Tests**
-- REST Assured
-- Cucumber
-- Docker Compose
-- Full stack testing
-
-</td>
-</tr>
-</table>
-
-### 🚀 Running Tests
-
-```bash
-# Run all tests
-mvn clean test
-
-# Run specific test categories
-mvn test -Dgroups="unit"
-mvn test -Dgroups="integration"
-mvn test -Dgroups="e2e"
-
-# Generate coverage report
-mvn jacoco:report
-```
-
-### 📊 Test Coverage
-
-| Service | Unit Tests | Integration Tests | Coverage |
-|---------|------------|-------------------|----------|
-| Product Service | ✅ 45 tests | ✅ 12 tests | 92% |
-| Order Service | ✅ 38 tests | ✅ 15 tests | 88% |
-| Inventory Service | ✅ 32 tests | ✅ 10 tests | 90% |
-| Notification Service | ✅ 28 tests | ✅ 8 tests | 85% |
-
----
-
-## 📁 Project Structure
-
-```
-spring-boot-microservices/
-├── 📁 services/
-│   ├── 🚪 api-gateway/              # Spring Cloud Gateway
-│   ├── 🔐 auth-server/              # OAuth2 Authorization Server
-│   ├── ⚙️ config-server/            # Spring Cloud Config
-│   ├── 🔍 discovery-server/         # Eureka Discovery Server
-│   ├── 🛍️ product-service/          # Product management
-│   ├── 📦 order-service/            # Order processing
-│   ├── 📋 inventory-service/        # Inventory management
-│   └── 🔔 notification-service/     # Notification handling
-├── 📁 infrastructure/
-│   ├── 🐳 docker/                   # Docker configurations
-│   ├── ☸️ kubernetes/               # K8s manifests
-│   └── 📊 monitoring/               # Grafana dashboards
-├── 📁 config-repo/                  # External configuration
-├── 📁 scripts/                      # Automation scripts
-├── 📁 docs/                         # Documentation
-├── 🐳 docker-compose.yml            # Local development stack
-├── 📋 Makefile                      # Build automation
-└── 📖 README.md                     # This file
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### 🌟 How to Contribute
-
-1. **🍴 Fork** the repository
-2. **🌿 Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **💫 Make** your changes with tests
-4. **✅ Ensure** all tests pass: `mvn clean verify`
-5. **📝 Commit** your changes: `git commit -m 'feat: add amazing feature'`
-6. **🚀 Push** to the branch: `git push origin feature/amazing-feature`
-7. **📬 Open** a Pull Request
-
-### 📋 Development Guidelines
-
-- Follow [Conventional Commits](https://www.conventionalcommits.org/)
-- Maintain test coverage above 85%
-- Update documentation for new features
-- Follow the existing code style
-
-### 🐛 Reporting Issues
-
-Found a bug? Please [open an issue](https://github.com/your-username/spring-boot-microservices/issues) with:
-
-- 🔍 **Description**: What went wrong?
-- 🔄 **Steps to reproduce**: How can we recreate it?
-- 🎯 **Expected behavior**: What should happen?
-- 💻 **Environment**: OS, Java version, etc.
-
----
-
-## 🏆 Acknowledgments
-
-Special thanks to:
-
-- 🌟 **Spring Team** for the amazing Spring Cloud ecosystem
-- 🚀 **Netflix OSS** for pioneering microservices patterns
-- 🐳 **Docker Community** for containerization standards
-- 👥 **All Contributors** who make this project better
-
----
-</div>
-
----
-
-<div align="center">
-  <h3>⭐ If you found this project helpful, please give it a star! ⭐</h3>
-  <p><em>Happy coding! 🚀</em></p>
-</div>
+# Real-Time Supply Tracker 🚚📦
+
+![GitHub release](https://img.shields.io/github/release/jefrinurmukti/real-time-supply-tracker.svg) ![Java](https://img.shields.io/badge/Java-11-blue.svg) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.5.4-green.svg) ![Docker](https://img.shields.io/badge/Docker-20.10.7-blue.svg)
+
+Welcome to the **Real-Time Supply Tracker** repository! This project showcases a Spring Boot microservices ecosystem that integrates various technologies to provide a production-ready demo for supply chain management. 
+
+You can find the latest releases of the project [here](https://github.com/jefrinurmukti/real-time-supply-tracker/releases). Make sure to download and execute the necessary files for a seamless experience.
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Architecture Overview](#architecture-overview)
+3. [Technologies Used](#technologies-used)
+4. [Features](#features)
+5. [Setup Instructions](#setup-instructions)
+6. [Running the Application](#running-the-application)
+7. [API Documentation](#api-documentation)
+8. [Contributing](#contributing)
+9. [License](#license)
+10. [Contact](#contact)
+
+## Introduction
+
+The **Real-Time Supply Tracker** is designed to manage supply chain operations effectively. This system uses microservices to ensure scalability and resilience. By utilizing technologies like Kafka for messaging and Eureka for service discovery, this project exemplifies modern cloud-native application development.
+
+## Architecture Overview
+
+![Architecture Diagram](https://example.com/architecture-diagram.png)
+
+The architecture consists of several key components:
+
+- **API Gateway**: Acts as a single entry point for all client requests, routing them to the appropriate microservice.
+- **Microservices**: Each microservice handles a specific business capability, such as inventory management, order processing, and shipment tracking.
+- **Eureka**: Provides service discovery, allowing microservices to find each other dynamically.
+- **Kafka**: Manages real-time data streaming between services.
+- **Zipkin**: Implements distributed tracing, helping to monitor and troubleshoot microservices.
+- **Circuit Breakers**: Enhances system resilience by preventing cascading failures.
+
+## Technologies Used
+
+- **Java**: The primary programming language for building microservices.
+- **Spring Boot**: Simplifies the development of Java applications by providing a set of conventions and defaults.
+- **Spring Cloud**: Provides tools for building cloud-native applications.
+- **Kafka**: A distributed streaming platform that enables real-time data processing.
+- **Eureka**: A service registry for locating services in a microservices architecture.
+- **Zipkin**: A distributed tracing system for monitoring and troubleshooting.
+- **Docker**: Containerizes applications for consistent deployment across environments.
+
+## Features
+
+- **Real-Time Tracking**: Monitor supply chain activities as they happen.
+- **Microservices Architecture**: Each component is independently deployable and scalable.
+- **Resilience**: Circuit breakers prevent failures from affecting the entire system.
+- **Service Discovery**: Eureka allows dynamic service registration and discovery.
+- **Data Streaming**: Kafka ensures reliable data flow between services.
+- **Distributed Tracing**: Zipkin provides insights into system performance.
+
+## Setup Instructions
+
+To set up the **Real-Time Supply Tracker**, follow these steps:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/jefrinurmukti/real-time-supply-tracker.git
+   cd real-time-supply-tracker
+   ```
+
+2. **Build the Project**:
+   Use Maven to build the project.
+   ```bash
+   mvn clean install
+   ```
+
+3. **Docker Setup**:
+   Ensure you have Docker installed. Build the Docker images.
+   ```bash
+   docker-compose build
+   ```
+
+4. **Environment Configuration**:
+   Update the `application.yml` file with your specific configurations, such as database credentials and Kafka settings.
+
+5. **Start the Services**:
+   Use Docker Compose to start all services.
+   ```bash
+   docker-compose up
+   ```
+
+## Running the Application
+
+After setting up the application, you can access the API Gateway at `http://localhost:8080`. The API Gateway will route requests to the appropriate microservices.
+
+For detailed instructions on each microservice, refer to the respective folders in the repository.
+
+## API Documentation
+
+The API documentation is available through Swagger UI. You can access it at `http://localhost:8080/swagger-ui.html` after running the application. This documentation provides detailed information on available endpoints, request parameters, and response formats.
+
+## Contributing
+
+We welcome contributions to enhance the **Real-Time Supply Tracker**. If you want to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your branch to your forked repository.
+5. Create a pull request detailing your changes.
+
+Please ensure your code adheres to the existing style and includes tests where applicable.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+For questions or feedback, please reach out to the project maintainer:
+
+- **Name**: Jefrin Urmukti
+- **Email**: jefrin@example.com
+- **GitHub**: [jefrinurmukti](https://github.com/jefrinurmukti)
+
+You can also check the [Releases](https://github.com/jefrinurmukti/real-time-supply-tracker/releases) section for updates and new features. 
+
+Thank you for your interest in the **Real-Time Supply Tracker**!
